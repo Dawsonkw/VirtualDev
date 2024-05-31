@@ -54,6 +54,7 @@ function App() {
           </SidebarTop>
 
           <JobList jobItems={jobItems} isLoading={isLoading} />
+          <JobList jobItems={jobItems} isLoading={isLoading} />
 
           <PaginationControls />
         </Sidebar>
