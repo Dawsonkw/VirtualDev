@@ -9,20 +9,26 @@ type JobItemApiResponse = {
   jobItem: JobItemExpanded;
 };
 
-const fetchJobItem = async (id: number): Promise<JobItemApiResponse> => {
-  const response = await fetch(`${BASE_API_URL}/${id}`);
-
-  if (!response.ok) {
-    await response.json();
+const fetchJobItem = async (
+  id: number | null
+): Promise<JobItemApiResponse | null> => {
+  if (id === null || id === 0) {
+    return null; // Return null if id is falsy
   }
-  const errorData = await response.json();
-  throw new Error(errorData.description);
+
+  const response = await fetch(`${BASE_API_URL}/${id}`);
+  if (!response.ok) {
+    const errorData = await response.text();
+    throw new Error(`API request failed: ${errorData}`);
+  }
+  const data = await response.json();
+  return data;
 };
 
 export function useJobItem(id: number | null) {
   const { data, isInitialLoading } = useQuery(
     ["job-item", id],
-    () => (id ? fetchJobItem(id) : null),
+    () => fetchJobItem(id),
     {
       staleTime: 1000 * 60 * 60,
       refetchOnWindowFocus: false,

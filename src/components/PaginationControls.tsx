@@ -48,20 +48,20 @@ function PaginationButton({
         onClick();
         e.currentTarget.blur();
       }}
-      className={`pagination__button  pagination__button--${direction}`}
+      className={`pagination__button pagination__button--${direction}`}
     >
       {direction === "previous" && (
         <>
           <ArrowLeftIcon />
           Page {currentPage - 1}
         </>
-      )}{" "}
-      {direction === "next" ? (
+      )}
+      {direction === "next" && (
         <>
           Page {currentPage + 1}
           <ArrowRightIcon />
         </>
-      ) : null}
+      )}
     </button>
   );
 }

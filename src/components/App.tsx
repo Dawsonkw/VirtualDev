@@ -24,7 +24,7 @@ function App() {
 
   //derived state
   const totalNumberOfResults = jobItems?.length || 0;
-  const totalNumberOfPages = Math.ceil(totalNumberOfResults / 7);
+  const totalNumberOfPages = totalNumberOfResults / 7;
   const jobItemsSliced =
     jobItems?.slice(currentPage * 7 - 7, currentPage * 7) || [];
 
