@@ -63,12 +63,11 @@ export function useJobItems(ids: number[]) {
 
   const jobItems = results
     .map((result) => result.data?.jobItem)
-    .filter((jobItem) => jobItem !== undefined);
+    .filter((jobItem): jobItem is JobItemExpanded => jobItem !== undefined);
   const isLoading = results.some((result) => result.isLoading);
 
   return { jobItems, isLoading };
 }
-
 // ---------------------------------------------------------
 
 type JobItemsApiResponse = {
@@ -148,7 +147,7 @@ export function useLocalStorage<T>(
   key: string,
   initialValue: T
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
-  const [value, setValue] = useState(() =>
+  const [value, setValue] = useState<T>(() =>
     JSON.parse(localStorage.getItem(key) || JSON.stringify(initialValue))
   );
 
@@ -156,7 +155,7 @@ export function useLocalStorage<T>(
     localStorage.setItem(key, JSON.stringify(value));
   }, [value, key]);
 
-  return [value, setValue] as const;
+  return [value, setValue];
 }
 
 export function useOnClickOutside(
